@@ -1,4 +1,4 @@
-import { useMemo, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useState, type FormEvent } from "react";
 import {
   ArrowDown,
   ArrowRight,
@@ -12,6 +12,7 @@ import {
   Sparkles,
   Star,
 } from "lucide-react";
+import ReviewPage from "./ReviewPage";
 
 type Company = {
   name: string;
@@ -72,8 +73,27 @@ const principles = [
 ];
 
 function App() {
+  const [pathname, setPathname] = useState(() => window.location.pathname);
   const [query, setQuery] = useState("");
   const [submittedQuery, setSubmittedQuery] = useState("");
+
+  useEffect(() => {
+    function syncPathname() {
+      setPathname(window.location.pathname);
+    }
+
+    window.addEventListener("popstate", syncPathname);
+    return () => window.removeEventListener("popstate", syncPathname);
+  }, []);
+
+  function navigateTo(path: string) {
+    if (window.location.pathname !== path) {
+      window.history.pushState(null, "", path);
+      setPathname(path);
+    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
   const filteredCompanies = useMemo(() => {
     if (!submittedQuery) return companies;
     const normalizedQuery = submittedQuery.toLocaleLowerCase("es");
@@ -88,10 +108,14 @@ function App() {
     document.getElementById("empresas")?.scrollIntoView({ behavior: "smooth" });
   }
 
+  if (pathname === "/resena") {
+    return <ReviewPage onNavigate={navigateTo} />;
+  }
+
   return (
     <div className="site-shell">
       <header className="site-header">
-        <a className="brand" href="#" aria-label="Trato, inicio">
+        <a className="brand" href="/" aria-label="Trato, inicio" onClick={(event) => { event.preventDefault(); navigateTo("/"); }}>
           <span className="brand-mark">t.</span>
           <span>trato</span>
         </a>
@@ -100,8 +124,8 @@ function App() {
           <a href="#empresas">Explorar empresas</a>
           <a href="#principios">Para qué existe</a>
         </nav>
-        <a className="header-cta" href="#empresas">
-          Encuentra tu próxima empresa <ArrowUpRight size={15} />
+        <a className="header-cta" href="/resena" onClick={(event) => { event.preventDefault(); navigateTo("/resena"); }}>
+          Escribir una reseña <ArrowUpRight size={15} />
         </a>
       </header>
 
@@ -265,14 +289,14 @@ function App() {
             <div className="eyebrow light-eyebrow"><span className="eyebrow-dot" /> TU EXPERIENCIA PUEDE AYUDAR</div>
             <h2>¿Ya pasaste por un proceso?</h2>
             <p>Cuéntalo de forma anónima. Hagamos que buscar trabajo sea un poco menos a ciegas.</p>
-            <a href="mailto:hola@trato.app?subject=Quiero%20compartir%20mi%20experiencia" className="join-button">Comparte tu experiencia <ArrowRight size={17} /></a>
+            <a href="/resena" className="join-button" onClick={(event) => { event.preventDefault(); navigateTo("/resena"); }}>Comparte tu experiencia <ArrowRight size={17} /></a>
             <span className="join-note"><ShieldCheck size={14} /> Sin nombres. Sin juicios. Solo información útil.</span>
           </div>
         </section>
       </main>
 
       <footer className="site-footer section-wrap">
-        <a className="brand footer-brand" href="#"><span className="brand-mark">t.</span><span>trato</span></a>
+        <a className="brand footer-brand" href="/" onClick={(event) => { event.preventDefault(); navigateTo("/"); }}><span className="brand-mark">t.</span><span>trato</span></a>
         <span>Un poco más de contexto. Un poco menos de ghosting.</span>
         <a href="#top" onClick={(event) => { event.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }} className="back-top">Volver arriba <ArrowDown size={14} /></a>
         <span className="copyright">© 2025 Trato</span>

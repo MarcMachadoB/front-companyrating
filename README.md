@@ -1,6 +1,8 @@
 # Trato — Frontend
 
-Landing page para una plataforma comunitaria que ayuda a las personas a conocer cómo son los procesos de selección de las empresas.
+Frontend para una plataforma comunitaria que ayuda a las personas a conocer cómo son los procesos de selección de las empresas.
+
+La ruta `/resena` contiene el formulario para compartir una experiencia de selección. Por ahora funciona como prototipo: muestra una vista previa, pero no guarda ni publica reseñas porque la API aún no está integrada.
 
 ## Desarrollo
 
