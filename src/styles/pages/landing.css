@@ -18,13 +18,13 @@ h1 span { color: #82a64b; }
 
 .search-form input::placeholder { color: #9aa39c; }
 
-.search-form button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 43px; padding: 0 15px; border: 0; border-radius: 6px; background: var(--green); color: white; font-size: 12px; font-weight: 600; cursor: pointer; transition: background .2s, transform .2s; }
+.search-form button { gap: 8px; height: 43px; padding: 0 15px; border: 0; border-radius: 6px; background: var(--green); color: white; font-size: 12px; font-weight: 600; cursor: pointer; transition: background .2s, transform .2s; }
 
 .search-form button:hover, .join-button:hover { background: #32644f; transform: translateY(-1px); }
 
-.hero-footnote { display: flex; align-items: center; gap: 12px; margin-top: 23px; color: #869189; font-size: 11px; }
+.hero-footnote { gap: 12px; margin-top: 23px; color: #869189; font-size: 11px; }
 
-.avatar-stack { display: flex; padding-left: 3px; }
+.avatar-stack { padding-left: 3px; }
 
 .avatar-stack i { display: grid; place-items: center; width: 23px; height: 23px; margin-left: -4px; border: 2px solid var(--paper); border-radius: 50%; background: #e9bfa4; color: #523c30; font-style: normal; font-size: 9px; font-weight: 700; }
 
@@ -46,7 +46,7 @@ h1 span { color: #82a64b; }
 
 .rating-card { position: relative; z-index: 1; width: 360px; padding: 22px; border: 1px solid #e9ebe2; border-radius: 13px; background: #fff; box-shadow: var(--fluent-shadow-16); transform: rotate(1deg); }
 
-.rating-card-top { display: flex; align-items: center; gap: 11px; }
+.rating-card-top { gap: 11px; }
 
 .company-avatar { display: grid; place-items: center; flex: 0 0 auto; width: 43px; height: 43px; border-radius: 11px; font: 800 18px "Manrope", sans-serif; letter-spacing: -1px; }
 
@@ -62,13 +62,13 @@ h1 span { color: #82a64b; }
 
 .icon-button { display: grid; place-items: center; width: 32px; height: 32px; margin-left: auto; border: 1px solid #ebede7; border-radius: 50%; background: white; color: #65736a; cursor: pointer; }
 
-.rating-score-row { display: flex; align-items: center; gap: 13px; margin: 23px 0 17px; }
+.rating-score-row { gap: 13px; margin: 23px 0 17px; }
 
 .rating-score-row > strong { font: 700 37px "Manrope", sans-serif; letter-spacing: -2px; }
 
 .star-rating { display: grid; gap: 3px; }
 
-.star-rating > span { display: flex; gap: 2px; color: #98b957; }
+.star-rating > span { gap: 2px; color: #98b957; }
 
 .star-rating svg { width: 12px; height: 12px; fill: currentColor; stroke-width: 0; }
 
@@ -76,13 +76,13 @@ h1 span { color: #82a64b; }
 
 .rating-divider, .company-card-rule { height: 1px; background: #eef0e9; }
 
-.metric-row { display: flex; justify-content: space-between; align-items: center; padding: 11px 0; color: #69776e; font-size: 10px; }
+.metric-row { padding: 11px 0; color: #69776e; font-size: 10px; }
 
-.metric-row > span { display: flex; align-items: center; gap: 7px; }
+.metric-row > span { gap: 7px; }
 
 .metric-row > span svg { color: #8b9987; }
 
-.metric-row b { display: flex; align-items: center; gap: 6px; color: #456148; font-size: 10px; font-weight: 600; }
+.metric-row b { gap: 6px; color: #456148; font-size: 10px; font-weight: 600; }
 
 .metric-dot { width: 6px; height: 6px; border-radius: 50%; background: #9dbf5c; }
 
@@ -94,7 +94,7 @@ h1 span { color: #82a64b; }
 
 .quote-card small { color: #a0a99f; font-size: 8px; }
 
-.floating-note { position: absolute; z-index: 2; display: flex; align-items: center; gap: 8px; padding: 11px 14px; border: 1px solid #ebede5; border-radius: 7px; background: #fff; color: #5f6b62; box-shadow: 0 8px 28px #273b2910; font-size: 10px; font-weight: 600; }
+.floating-note { position: absolute; z-index: 2; gap: 8px; padding: 11px 14px; border: 1px solid #ebede5; border-radius: 7px; background: #fff; color: #5f6b62; box-shadow: 0 8px 28px #273b2910; font-size: 10px; font-weight: 600; }
 
 .note-top { top: 93px; right: 4px; }
 
@@ -106,7 +106,7 @@ h1 span { color: #82a64b; }
 
 .art-caption { position: absolute; right: 12px; bottom: 24px; color: #9aa39a; font: italic 11px "Manrope", sans-serif; }
 
-.trust-strip { display: flex; align-items: center; justify-content: space-evenly; min-height: 65px; padding: 0 30px; background: #e9eedf; color: #557046; font-size: 9px; font-weight: 700; letter-spacing: 1.2px; white-space: nowrap; }
+.trust-strip { justify-content: space-evenly; min-height: 65px; padding: 0 30px; background: #e9eedf; color: #557046; font-size: 9px; font-weight: 700; letter-spacing: 1.2px; white-space: nowrap; }
 
 .strip-star { color: #91ab5c; font-size: 15px; }
 
@@ -118,26 +118,26 @@ h1 span { color: #82a64b; }
 
 .section-heading h2 span, .principles-heading h2 span { color: #86a74e; }
 
-.text-link { display: inline-flex; align-items: center; gap: 9px; padding-bottom: 6px; color: #526258; font-size: 11px; font-weight: 600; }
+.text-link { gap: 9px; padding-bottom: 6px; color: #526258; font-size: 11px; font-weight: 600; }
 
 .company-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 17px; }
 
 .company-card { padding: 21px 21px 16px; border: 1px solid var(--fluent-neutral-stroke1); border-radius: 9px; background: var(--fluent-neutral-background1); transition: transform .2s, box-shadow .2s; }
 .company-card:hover { transform: translateY(-3px); box-shadow: var(--fluent-shadow-8); }
 
-.company-card-head { display: flex; align-items: center; justify-content: space-between; }
 
-.score-badge { display: inline-flex; align-items: center; gap: 5px; padding: 5px 8px; border-radius: 5px; background: #f1f5e9; color: #66823c; font-size: 10px; font-weight: 700; }
+
+.score-badge { gap: 5px; padding: 5px 8px; border-radius: 5px; background: #f1f5e9; color: #66823c; font-size: 10px; font-weight: 700; }
 
 .company-card h3 { margin: 19px 0 3px; font: 700 19px "Manrope", sans-serif; letter-spacing: -.5px; }
 
 .company-category { margin: 0 0 17px; color: #969f97; font-size: 10px; }
 
-.company-note { display: flex; align-items: center; gap: 8px; min-height: 38px; margin: 12px 0; color: #627267; font-size: 10px; }
+.company-note { gap: 8px; min-height: 38px; margin: 12px 0; color: #627267; font-size: 10px; }
 
 .note-check { display: grid; place-items: center; flex: 0 0 auto; width: 18px; height: 18px; border-radius: 50%; background: #eef4e5; color: #779744; }
 
-.company-card-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 11px; border-top: 1px solid #eff0eb; color: #9aa39a; font-size: 9px; }
+.company-card-bottom { padding-top: 11px; border-top: 1px solid #eff0eb; color: #9aa39a; font-size: 9px; }
 
 .company-card-bottom a { display: grid; place-items: center; width: 26px; height: 26px; border: 1px solid #e6e9e0; border-radius: 50%; color: #66776a; }
 
@@ -160,8 +160,6 @@ h1 span { color: #82a64b; }
 .how-intro h2 span { color: #c5e66d; }
 
 .how-intro > p { max-width: 370px; margin-bottom: 25px; color: #b9c7bd; font-size: 13px; line-height: 1.75; }
-
-.light-link { display: inline-flex; align-items: center; gap: 8px; color: #d4e5b2; font-size: 11px; font-weight: 600; }
 
 .light-link:hover { color: #fff; }
 
@@ -215,7 +213,7 @@ h1 span { color: #82a64b; }
 
 .join-card > p { max-width: 490px; margin-bottom: 20px; color: #65775d; font-size: 12px; line-height: 1.7; }
 
-.join-button { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 10px; padding: 13px 16px; border-radius: 6px; background: #244d3d; color: #fff; font-size: 11px; font-weight: 600; transition: background .2s, transform .2s; }
+.join-button { position: relative; z-index: 1; gap: 10px; padding: 13px 16px; border-radius: 6px; background: #244d3d; color: #fff; font-size: 11px; font-weight: 600; transition: background .2s, transform .2s; }
 
 .join-note { display: flex; align-items: center; gap: 6px; margin-top: 14px; color: #71836a; font-size: 9px; }
 
