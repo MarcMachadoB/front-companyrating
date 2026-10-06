@@ -1,0 +1,38 @@
+:root {
+  font-family: "DM Sans", sans-serif;
+  color: #1e3029;
+  background: #f8f7f2;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  --ink: #1e3029;
+  --green: #244d3d;
+  --lime: #c5e66d;
+  --muted: #7d8981;
+  --paper: #f8f7f2;
+
+  --fluent-brand-primary: #0f6cbd;
+  --fluent-brand-primary-hover: #115ea3;
+  --fluent-neutral-foreground1: #242424;
+  --fluent-neutral-foreground2: #616161;
+  --fluent-neutral-background1: #ffffff;
+  --fluent-neutral-background2: #f8f7f2;
+  --fluent-neutral-stroke1: #e7e9df;
+  --fluent-shadow-2: 0 1px 2px rgb(0 0 0 / 8%);
+  --fluent-shadow-8: 0 4px 12px rgb(0 0 0 / 10%);
+  --fluent-shadow-16: 0 12px 32px rgb(0 0 0 / 14%);
+  --fluent-radius-medium: 6px;
+
+  --bs-primary: var(--fluent-brand-primary);
+  --bs-primary-rgb: 15, 108, 189;
+  --bs-link-color: var(--fluent-brand-primary);
+  --bs-link-hover-color: var(--fluent-brand-primary-hover);
+  --bs-body-color: var(--ink);
+  --bs-body-bg: var(--paper);
+  --bs-body-font-family: "DM Sans", sans-serif;
+  --bs-focus-ring-color: rgb(15 108 189 / 25%);
+  --bs-border-radius: var(--fluent-radius-medium);
+}

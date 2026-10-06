@@ -56,7 +56,7 @@ function ChoiceGroup({
       <legend>{legend}{required && <span className="required-mark"> *</span>}</legend>
       <div className="choice-list">
         {options.map((option) => (
-          <label className="choice-option" key={option.value}>
+          <label className="choice-option d-inline-flex align-items-center" key={option.value}>
             <input
               type="radio"
               name={name}
@@ -139,16 +139,16 @@ function ReviewPage({ onNavigate }: ReviewPageProps) {
 
   return (
     <div className="review-page">
-      <header className="site-header review-header">
-        <a className="brand" href="/" aria-label="Trato, volver al inicio" onClick={(event) => { event.preventDefault(); onNavigate("/"); }}>
+      <header className="site-header review-header d-flex align-items-center justify-content-between">
+        <a className="brand d-inline-flex align-items-center u-focus-ring" href="/" aria-label="Trato, volver al inicio" onClick={(event) => { event.preventDefault(); onNavigate("/"); }}>
           <span className="brand-mark">t.</span><span>trato</span>
         </a>
-        <a className="review-back-link" href="/" onClick={(event) => { event.preventDefault(); onNavigate("/"); }}><ArrowLeft size={15} /> Volver al inicio</a>
+        <a className="review-back-link d-inline-flex align-items-center u-focus-ring" href="/" onClick={(event) => { event.preventDefault(); onNavigate("/"); }}><ArrowLeft size={15} /> Volver al inicio</a>
       </header>
 
       <main className="review-main">
         <div className="review-intro">
-          <div className="eyebrow"><span className="eyebrow-dot" /> TU EXPERIENCIA IMPORTA</div>
+          <div className="eyebrow d-flex align-items-center"><span className="eyebrow-dot" /> TU EXPERIENCIA IMPORTA</div>
           <h1>Que no se quede <span>en visto.</span></h1>
           <p>Comparte cómo fue tu proceso de selección. Tu opinión ayuda a otras personas a postular con más contexto.</p>
         </div>
@@ -156,7 +156,7 @@ function ReviewPage({ onNavigate }: ReviewPageProps) {
         {draft ? (
           <section className="review-confirmation" role="status">
             <div className="confirmation-icon"><Check size={23} /></div>
-            <div className="eyebrow"><span className="eyebrow-dot" /> VISTA PREVIA LISTA</div>
+            <div className="eyebrow d-flex align-items-center"><span className="eyebrow-dot" /> VISTA PREVIA LISTA</div>
             <h2>Revisa tu experiencia.</h2>
             <p className="confirmation-summary">
               Así se verá el resumen de tu reseña de <strong>{draft.company}</strong>. Comprueba tus respuestas antes de continuar.
@@ -172,35 +172,36 @@ function ReviewPage({ onNavigate }: ReviewPageProps) {
               {draft.positive && <div className="draft-comment"><dt>Qué hizo bien</dt><dd>{draft.positive}</dd></div>}
               {draft.improvement && <div className="draft-comment"><dt>Qué podría mejorar</dt><dd>{draft.improvement}</dd></div>}
             </dl>
-            <div className="demo-notice">
+            <div className="demo-notice d-flex align-items-start">
               <ShieldCheck size={18} />
               <p><strong>Aún no se ha enviado.</strong> Esta versión no está conectada al servidor; tu reseña no se ha guardado ni publicado.</p>
             </div>
             <div className="confirmation-actions">
-              <button className="review-submit-button" type="button" onClick={editDraft}>Editar mis respuestas</button>
-              <a className="review-secondary-link" href="/" onClick={(event) => { event.preventDefault(); onNavigate("/"); }}>Volver al inicio <ArrowRight size={15} /></a>
+              <button className="review-submit-button d-inline-flex align-items-center justify-content-center u-focus-ring" type="button" onClick={editDraft}>Editar mis respuestas</button>
+              <a className="review-secondary-link d-inline-flex align-items-center u-focus-ring" href="/" onClick={(event) => { event.preventDefault(); onNavigate("/"); }}>Volver al inicio <ArrowRight size={15} /></a>
             </div>
           </section>
         ) : (
-          <div className="review-layout">
-            <form className="review-form" onSubmit={handleSubmit}>
+          <div className="review-layout row g-4">
+            <div className="col-12 col-lg-8">
+              <form className="review-form" onSubmit={handleSubmit}>
               <section className="form-section">
-                <div className="form-section-heading">
+                <div className="form-section-heading d-flex align-items-start">
                   <span className="form-step">01</span>
                   <div><h2>El proceso</h2><p>Lo básico para entender tu experiencia.</p></div>
                 </div>
                 <div className="form-fields-grid">
-                  <label className="form-field">
+                  <label className="form-field d-flex flex-column">
                     <span>Empresa <span className="required-mark">*</span></span>
-                    <input name="company" type="text" placeholder="Ej. Nubea" autoComplete="organization" required maxLength={100} defaultValue={formValues?.company ?? ""} />
+                    <input className="form-control" name="company" type="text" placeholder="Ej. Nubea" autoComplete="organization" required maxLength={100} defaultValue={formValues?.company ?? ""} />
                   </label>
-                  <label className="form-field">
+                  <label className="form-field d-flex flex-column">
                     <span>Puesto al que postulaste <span className="required-mark">*</span></span>
-                    <input name="role" type="text" placeholder="Ej. Diseñadora de producto" required maxLength={100} defaultValue={formValues?.role ?? ""} />
+                    <input className="form-control" name="role" type="text" placeholder="Ej. Diseñadora de producto" required maxLength={100} defaultValue={formValues?.role ?? ""} />
                   </label>
-                  <label className="form-field">
+                  <label className="form-field d-flex flex-column">
                     <span>¿Hasta dónde llegaste? <span className="required-mark">*</span></span>
-                    <select name="stage" defaultValue={formValues?.stage ?? ""} required>
+                    <select className="form-select" name="stage" defaultValue={formValues?.stage ?? ""} required>
                       <option value="" disabled>Selecciona una etapa</option>
                       <option value="application">Envié mi candidatura</option>
                       <option value="screening">Tuve una primera llamada</option>
@@ -208,21 +209,21 @@ function ReviewPage({ onNavigate }: ReviewPageProps) {
                       <option value="offer">Recibí una oferta</option>
                     </select>
                   </label>
-                  <label className="form-field">
+                  <label className="form-field d-flex flex-column">
                     <span>¿Cuándo ocurrió? <span className="required-mark">*</span></span>
-                    <input name="experienceDate" type="month" required defaultValue={formValues?.experienceDate ?? ""} />
+                    <input className="form-control" name="experienceDate" type="month" required defaultValue={formValues?.experienceDate ?? ""} />
                   </label>
                 </div>
               </section>
 
               <section className="form-section" id="overall-rating">
-                <div className="form-section-heading">
+                <div className="form-section-heading d-flex align-items-start">
                   <span className="form-step">02</span>
                   <div><h2>El trato</h2><p>Cuéntanos cómo te sentiste durante el proceso.</p></div>
                 </div>
                 <fieldset className="review-fieldset rating-fieldset">
                   <legend>En general, ¿cómo fue tu experiencia? <span className="required-mark">*</span></legend>
-                  <div className="rating-picker" role="radiogroup" aria-label="Valoración general" aria-required="true">
+                  <div className="rating-picker d-flex align-items-center" role="radiogroup" aria-label="Valoración general" aria-required="true">
                     {[1, 2, 3, 4, 5].map((value) => (
                       <button
                         className={`rating-choice${rating >= value ? " selected" : ""}`}
@@ -246,40 +247,41 @@ function ReviewPage({ onNavigate }: ReviewPageProps) {
               </section>
 
               <section className="form-section">
-                <div className="form-section-heading">
+                <div className="form-section-heading d-flex align-items-start">
                   <span className="form-step">03</span>
                   <div><h2>Lo que quieras contar</h2><p>Comparte detalles que puedan ayudar a alguien más.</p></div>
                 </div>
-                <label className="form-field textarea-field">
+                <label className="form-field textarea-field d-flex flex-column">
                   <span>¿Qué hizo bien la empresa?</span>
-                  <textarea name="positive" rows={3} maxLength={1000} placeholder="Por ejemplo: explicaron las etapas y respetaron los horarios..." defaultValue={formValues?.positive ?? ""} />
+                  <textarea className="form-control" name="positive" rows={3} maxLength={1000} placeholder="Por ejemplo: explicaron las etapas y respetaron los horarios..." defaultValue={formValues?.positive ?? ""} />
                 </label>
-                <label className="form-field textarea-field">
+                <label className="form-field textarea-field d-flex flex-column">
                   <span>¿Qué podría mejorar?</span>
-                  <textarea name="improvement" rows={3} maxLength={1000} placeholder="Por ejemplo: habría agradecido una respuesta después de la última entrevista..." defaultValue={formValues?.improvement ?? ""} />
+                  <textarea className="form-control" name="improvement" rows={3} maxLength={1000} placeholder="Por ejemplo: habría agradecido una respuesta después de la última entrevista..." defaultValue={formValues?.improvement ?? ""} />
                 </label>
                 <p className="form-guidance">Evita incluir nombres de personas, datos de contacto o información confidencial.</p>
               </section>
 
-              <label className="consent-option">
+              <label className="consent-option d-flex align-items-start">
                 <input name="firsthand" type="checkbox" required defaultChecked={formValues !== null} />
                 <span className="consent-checkbox"><Check size={13} /></span>
                 <span>Confirmo que comparto una experiencia propia y que mi reseña no incluye datos personales de otras personas. <span className="required-mark">*</span></span>
               </label>
-              <button className="review-submit-button" type="submit">Revisar mi reseña <ArrowRight size={16} /></button>
-              <p className="submit-hint"><ShieldCheck size={14} /> La reseña es anónima. No pedimos tu nombre ni tu correo.</p>
-            </form>
+              <button className="review-submit-button d-inline-flex align-items-center justify-content-center u-focus-ring" type="submit">Revisar mi reseña <ArrowRight size={16} /></button>
+              <p className="submit-hint d-flex align-items-center"><ShieldCheck size={14} /> La reseña es anónima. No pedimos tu nombre ni tu correo.</p>
+              </form>
+            </div>
 
-            <aside className="review-sidebar">
+            <aside className="review-sidebar col-12 col-lg-4">
               <div className="privacy-card">
                 <div className="privacy-icon"><ShieldCheck size={20} /></div>
                 <h2>Tu identidad, fuera de la reseña.</h2>
                 <p>No te pedimos nombre, correo ni perfil. Comparte solo lo que viviste desde tu perspectiva.</p>
                 <div className="privacy-rule" />
                 <ul>
-                  <li><Check size={14} /> Sin nombres de entrevistadores</li>
-                  <li><Check size={14} /> Sin datos de contacto</li>
-                  <li><Check size={14} /> Habla desde tu experiencia</li>
+                  <li className="d-flex align-items-center"><Check size={14} /> Sin nombres de entrevistadores</li>
+                  <li className="d-flex align-items-center"><Check size={14} /> Sin datos de contacto</li>
+                  <li className="d-flex align-items-center"><Check size={14} /> Habla desde tu experiencia</li>
                 </ul>
               </div>
               <p className="review-sidebar-note">Las reseñas deben describir experiencias propias y opiniones honestas. No incluyas información confidencial de la empresa.</p>
@@ -288,8 +290,8 @@ function ReviewPage({ onNavigate }: ReviewPageProps) {
         )}
       </main>
 
-      <footer className="review-footer">
-        <a className="brand footer-brand" href="/" onClick={(event) => { event.preventDefault(); onNavigate("/"); }}><span className="brand-mark">t.</span><span>trato</span></a>
+      <footer className="review-footer d-flex align-items-center">
+        <a className="brand footer-brand d-inline-flex align-items-center u-focus-ring" href="/" onClick={(event) => { event.preventDefault(); onNavigate("/"); }}><span className="brand-mark">t.</span><span>trato</span></a>
         <span>Un poco más de contexto. Un poco menos de ghosting.</span>
         <span className="copyright">© 2025 Trato</span>
       </footer>
