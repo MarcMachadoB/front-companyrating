@@ -124,7 +124,7 @@ function App() {
           <a href="#empresas">Explorar empresas</a>
           <a href="#principios">Para qué existe</a>
         </nav>
-        <a className="header-cta" href="/resena" onClick={(event) => { event.preventDefault(); navigateTo("/resena"); }}>
+        <a className="header-cta u-focus-ring" href="/resena" onClick={(event) => { event.preventDefault(); navigateTo("/resena"); }}>
           Escribir una reseña <ArrowUpRight size={15} />
         </a>
       </header>
@@ -144,7 +144,7 @@ function App() {
             </p>
             <form className="search-form" onSubmit={handleSearch}>
               <Search size={19} aria-hidden="true" />
-              <label className="visually-hidden" htmlFor="company-search">Busca una empresa</label>
+              <label className="u-visually-hidden" htmlFor="company-search">Busca una empresa</label>
               <input
                 id="company-search"
                 type="search"
@@ -171,7 +171,7 @@ function App() {
               <div className="rating-card-top">
                 <div className="company-avatar lilac">nu</div>
                 <div><span className="micro-label">EJEMPLO · PERFIL DE EMPRESA</span><h2>Nubea</h2></div>
-                <button className="icon-button" type="button" aria-label="Ver perfil de Nubea"><ArrowUpRight size={17} /></button>
+                <button className="icon-button u-focus-ring" type="button" aria-label="Ver perfil de Nubea"><ArrowUpRight size={17} /></button>
               </div>
               <div className="rating-score-row">
                 <strong>4,8</strong>
@@ -235,7 +235,7 @@ function App() {
                   <p className="company-note"><span className="note-check"><Check size={13} /></span>{company.note}</p>
                   <div className="company-card-bottom">
                     <span>{company.reviews} experiencias</span>
-                    <a href="#como-funciona" aria-label={`Conoce más sobre ${company.name}`}><ArrowUpRight size={17} /></a>
+                    <a className="u-focus-ring" href="#como-funciona" aria-label={`Conoce más sobre ${company.name}`}><ArrowUpRight size={17} /></a>
                   </div>
                 </article>
               ))}
@@ -289,7 +289,7 @@ function App() {
             <div className="eyebrow light-eyebrow"><span className="eyebrow-dot" /> TU EXPERIENCIA PUEDE AYUDAR</div>
             <h2>¿Ya pasaste por un proceso?</h2>
             <p>Cuéntalo de forma anónima. Hagamos que buscar trabajo sea un poco menos a ciegas.</p>
-            <a href="/resena" className="join-button" onClick={(event) => { event.preventDefault(); navigateTo("/resena"); }}>Comparte tu experiencia <ArrowRight size={17} /></a>
+            <a href="/resena" className="join-button u-focus-ring" onClick={(event) => { event.preventDefault(); navigateTo("/resena"); }}>Comparte tu experiencia <ArrowRight size={17} /></a>
             <span className="join-note"><ShieldCheck size={14} /> Sin nombres. Sin juicios. Solo información útil.</span>
           </div>
         </section>

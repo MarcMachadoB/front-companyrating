@@ -140,10 +140,10 @@ function ReviewPage({ onNavigate }: ReviewPageProps) {
   return (
     <div className="review-page">
       <header className="site-header review-header">
-        <a className="brand" href="/" aria-label="Trato, volver al inicio" onClick={(event) => { event.preventDefault(); onNavigate("/"); }}>
+        <a className="brand u-focus-ring" href="/" aria-label="Trato, volver al inicio" onClick={(event) => { event.preventDefault(); onNavigate("/"); }}>
           <span className="brand-mark">t.</span><span>trato</span>
         </a>
-        <a className="review-back-link" href="/" onClick={(event) => { event.preventDefault(); onNavigate("/"); }}><ArrowLeft size={15} /> Volver al inicio</a>
+        <a className="review-back-link u-focus-ring" href="/" onClick={(event) => { event.preventDefault(); onNavigate("/"); }}><ArrowLeft size={15} /> Volver al inicio</a>
       </header>
 
       <main className="review-main">
@@ -177,13 +177,14 @@ function ReviewPage({ onNavigate }: ReviewPageProps) {
               <p><strong>Aún no se ha enviado.</strong> Esta versión no está conectada al servidor; tu reseña no se ha guardado ni publicado.</p>
             </div>
             <div className="confirmation-actions">
-              <button className="review-submit-button" type="button" onClick={editDraft}>Editar mis respuestas</button>
-              <a className="review-secondary-link" href="/" onClick={(event) => { event.preventDefault(); onNavigate("/"); }}>Volver al inicio <ArrowRight size={15} /></a>
+              <button className="review-submit-button u-focus-ring" type="button" onClick={editDraft}>Editar mis respuestas</button>
+              <a className="review-secondary-link u-focus-ring" href="/" onClick={(event) => { event.preventDefault(); onNavigate("/"); }}>Volver al inicio <ArrowRight size={15} /></a>
             </div>
           </section>
         ) : (
-          <div className="review-layout">
-            <form className="review-form" onSubmit={handleSubmit}>
+          <div className="review-layout row g-4">
+            <div className="col-12 col-lg-8">
+              <form className="review-form" onSubmit={handleSubmit}>
               <section className="form-section">
                 <div className="form-section-heading">
                   <span className="form-step">01</span>
@@ -192,15 +193,15 @@ function ReviewPage({ onNavigate }: ReviewPageProps) {
                 <div className="form-fields-grid">
                   <label className="form-field">
                     <span>Empresa <span className="required-mark">*</span></span>
-                    <input name="company" type="text" placeholder="Ej. Nubea" autoComplete="organization" required maxLength={100} defaultValue={formValues?.company ?? ""} />
+                    <input className="form-control" name="company" type="text" placeholder="Ej. Nubea" autoComplete="organization" required maxLength={100} defaultValue={formValues?.company ?? ""} />
                   </label>
                   <label className="form-field">
                     <span>Puesto al que postulaste <span className="required-mark">*</span></span>
-                    <input name="role" type="text" placeholder="Ej. Diseñadora de producto" required maxLength={100} defaultValue={formValues?.role ?? ""} />
+                    <input className="form-control" name="role" type="text" placeholder="Ej. Diseñadora de producto" required maxLength={100} defaultValue={formValues?.role ?? ""} />
                   </label>
                   <label className="form-field">
                     <span>¿Hasta dónde llegaste? <span className="required-mark">*</span></span>
-                    <select name="stage" defaultValue={formValues?.stage ?? ""} required>
+                    <select className="form-select" name="stage" defaultValue={formValues?.stage ?? ""} required>
                       <option value="" disabled>Selecciona una etapa</option>
                       <option value="application">Envié mi candidatura</option>
                       <option value="screening">Tuve una primera llamada</option>
@@ -210,7 +211,7 @@ function ReviewPage({ onNavigate }: ReviewPageProps) {
                   </label>
                   <label className="form-field">
                     <span>¿Cuándo ocurrió? <span className="required-mark">*</span></span>
-                    <input name="experienceDate" type="month" required defaultValue={formValues?.experienceDate ?? ""} />
+                    <input className="form-control" name="experienceDate" type="month" required defaultValue={formValues?.experienceDate ?? ""} />
                   </label>
                 </div>
               </section>
@@ -252,11 +253,11 @@ function ReviewPage({ onNavigate }: ReviewPageProps) {
                 </div>
                 <label className="form-field textarea-field">
                   <span>¿Qué hizo bien la empresa?</span>
-                  <textarea name="positive" rows={3} maxLength={1000} placeholder="Por ejemplo: explicaron las etapas y respetaron los horarios..." defaultValue={formValues?.positive ?? ""} />
+                  <textarea className="form-control" name="positive" rows={3} maxLength={1000} placeholder="Por ejemplo: explicaron las etapas y respetaron los horarios..." defaultValue={formValues?.positive ?? ""} />
                 </label>
                 <label className="form-field textarea-field">
                   <span>¿Qué podría mejorar?</span>
-                  <textarea name="improvement" rows={3} maxLength={1000} placeholder="Por ejemplo: habría agradecido una respuesta después de la última entrevista..." defaultValue={formValues?.improvement ?? ""} />
+                  <textarea className="form-control" name="improvement" rows={3} maxLength={1000} placeholder="Por ejemplo: habría agradecido una respuesta después de la última entrevista..." defaultValue={formValues?.improvement ?? ""} />
                 </label>
                 <p className="form-guidance">Evita incluir nombres de personas, datos de contacto o información confidencial.</p>
               </section>
@@ -266,11 +267,12 @@ function ReviewPage({ onNavigate }: ReviewPageProps) {
                 <span className="consent-checkbox"><Check size={13} /></span>
                 <span>Confirmo que comparto una experiencia propia y que mi reseña no incluye datos personales de otras personas. <span className="required-mark">*</span></span>
               </label>
-              <button className="review-submit-button" type="submit">Revisar mi reseña <ArrowRight size={16} /></button>
+              <button className="review-submit-button u-focus-ring" type="submit">Revisar mi reseña <ArrowRight size={16} /></button>
               <p className="submit-hint"><ShieldCheck size={14} /> La reseña es anónima. No pedimos tu nombre ni tu correo.</p>
-            </form>
+              </form>
+            </div>
 
-            <aside className="review-sidebar">
+            <aside className="review-sidebar col-12 col-lg-4">
               <div className="privacy-card">
                 <div className="privacy-icon"><ShieldCheck size={20} /></div>
                 <h2>Tu identidad, fuera de la reseña.</h2>
@@ -289,7 +291,7 @@ function ReviewPage({ onNavigate }: ReviewPageProps) {
       </main>
 
       <footer className="review-footer">
-        <a className="brand footer-brand" href="/" onClick={(event) => { event.preventDefault(); onNavigate("/"); }}><span className="brand-mark">t.</span><span>trato</span></a>
+        <a className="brand footer-brand u-focus-ring" href="/" onClick={(event) => { event.preventDefault(); onNavigate("/"); }}><span className="brand-mark">t.</span><span>trato</span></a>
         <span>Un poco más de contexto. Un poco menos de ghosting.</span>
         <span className="copyright">© 2025 Trato</span>
       </footer>
