@@ -12,6 +12,12 @@
 
 .header-cta:hover { background: #eef1e7; }
 
+.header-actions { gap: 18px; }
+
+.header-login { gap: 6px; color: #53645a; font-size: 12px; font-weight: 600; }
+
+.header-login:hover { color: #789a3f; }
+
 .footer-brand { margin-right: 4px; color: var(--ink); font-size: 18px; }
 
 .footer-brand .brand-mark { width: 26px; height: 26px; border-radius: 8px; font-size: 16px; }
@@ -27,9 +33,9 @@
 .eyebrow-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #a9ca62; box-shadow: 0 0 0 4px #edf3dd; }
 
 @media (max-width: 900px) {
-  .main-nav { gap: 18px; margin-left: 0; }.header-cta { padding: 10px; font-size: 10px; }
+  .main-nav { gap: 18px; margin-left: 0; }.header-cta { padding: 10px; font-size: 10px; }.header-actions { gap: 10px; }.header-login { font-size: 10px; }
 }
 
 @media (max-width: 650px) {.brand { font-size: 21px; }.brand-mark { width: 29px; height: 29px; }
-  .main-nav { display: none; }.header-cta { padding: 9px 10px; font-size: 9px; }.back-top { margin-left: 0; }.copyright { margin-left: auto; }
+  .main-nav { display: none; }.header-cta { padding: 9px 10px; font-size: 9px; }.header-actions { gap: 9px; }.header-login { font-size: 10px; }.back-top { margin-left: 0; }.copyright { margin-left: auto; }
 }

@@ -7,12 +7,14 @@ import {
   ChevronDown,
   Clock3,
   HeartHandshake,
+  LogIn,
   Search,
   ShieldCheck,
   Sparkles,
   Star,
 } from "lucide-react";
 import ReviewPage from "./ReviewPage";
+import AuthPage from "./AuthPage";
 
 type Company = {
   name: string;
@@ -74,6 +76,8 @@ const principles = [
 
 function App() {
   const [pathname, setPathname] = useState(() => window.location.pathname);
+  const [showNameOnReviews, setShowNameOnReviews] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [query, setQuery] = useState("");
   const [submittedQuery, setSubmittedQuery] = useState("");
 
@@ -86,12 +90,30 @@ function App() {
     return () => window.removeEventListener("popstate", syncPathname);
   }, []);
 
+  useEffect(() => {
+    if (pathname === "/resena" && !isAuthenticated) {
+      window.history.replaceState(null, "", "/acceso");
+      setPathname("/acceso");
+    }
+  }, [pathname, isAuthenticated]);
+
   function navigateTo(path: string) {
     if (window.location.pathname !== path) {
       window.history.pushState(null, "", path);
       setPathname(path);
     }
     window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function handleAuthenticated(nextShowNameOnReviews: boolean) {
+    setShowNameOnReviews(nextShowNameOnReviews);
+    setIsAuthenticated(true);
+    navigateTo("/resena");
+  }
+
+  function handleLogout() {
+    setIsAuthenticated(false);
+    navigateTo("/acceso");
   }
 
   const filteredCompanies = useMemo(() => {
@@ -108,8 +130,12 @@ function App() {
     document.getElementById("empresas")?.scrollIntoView({ behavior: "smooth" });
   }
 
-  if (pathname === "/resena") {
-    return <ReviewPage onNavigate={navigateTo} />;
+  if (pathname === "/resena" && isAuthenticated) {
+    return <ReviewPage onNavigate={navigateTo} onLogout={handleLogout} showNameOnReviews={showNameOnReviews} />;
+  }
+
+  if (pathname === "/acceso" || pathname === "/login" || pathname === "/resena") {
+    return <AuthPage onNavigate={navigateTo} onAuthenticated={handleAuthenticated} />;
   }
 
   return (
@@ -124,9 +150,14 @@ function App() {
           <a href="#empresas">Explorar empresas</a>
           <a href="#principios">Para qué existe</a>
         </nav>
-        <a className="header-cta d-flex align-items-center u-focus-ring" href="/resena" onClick={(event) => { event.preventDefault(); navigateTo("/resena"); }}>
+        <div className="header-actions d-flex align-items-center">
+          <a className="header-login d-inline-flex align-items-center u-focus-ring" href="/acceso" onClick={(event) => { event.preventDefault(); navigateTo("/acceso"); }}>
+            <LogIn size={14} /> Entrar
+          </a>
+          <a className="header-cta d-flex align-items-center u-focus-ring" href="/acceso" onClick={(event) => { event.preventDefault(); navigateTo("/acceso"); }}>
           Escribir una reseña <ArrowUpRight size={15} />
-        </a>
+          </a>
+        </div>
       </header>
 
       <main>
@@ -288,9 +319,9 @@ function App() {
             <div className="join-sparkle">✳</div>
             <div className="eyebrow light-eyebrow d-flex align-items-center"><span className="eyebrow-dot" /> TU EXPERIENCIA PUEDE AYUDAR</div>
             <h2>¿Ya pasaste por un proceso?</h2>
-            <p>Cuéntalo de forma anónima. Hagamos que buscar trabajo sea un poco menos a ciegas.</p>
-            <a href="/resena" className="join-button d-inline-flex align-items-center u-focus-ring" onClick={(event) => { event.preventDefault(); navigateTo("/resena"); }}>Comparte tu experiencia <ArrowRight size={17} /></a>
-            <span className="join-note"><ShieldCheck size={14} /> Sin nombres. Sin juicios. Solo información útil.</span>
+            <p>Comparte lo que viviste y elige si quieres mostrar tu nombre. La cuenta ayuda a moderar las reseñas y a gestionar tus experiencias.</p>
+            <a href="/acceso" className="join-button d-inline-flex align-items-center u-focus-ring" onClick={(event) => { event.preventDefault(); navigateTo("/acceso"); }}>Comparte tu experiencia <ArrowRight size={17} /></a>
+            <span className="join-note"><ShieldCheck size={14} /> Tú eliges cómo aparece tu nombre en público.</span>
           </div>
         </section>
       </main>

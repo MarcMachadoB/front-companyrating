@@ -1,5 +1,5 @@
 import { useEffect, useState, type FormEvent } from "react";
-import { ArrowLeft, ArrowRight, Check, ShieldCheck, Star } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, LogOut, ShieldCheck, Star } from "lucide-react";
 
 type ReviewDraft = {
   company: string;
@@ -16,6 +16,8 @@ type ReviewDraft = {
 
 type ReviewPageProps = {
   onNavigate: (path: string) => void;
+  onLogout: () => void;
+  showNameOnReviews: boolean;
 };
 
 const communicationOptions = [
@@ -73,7 +75,7 @@ function ChoiceGroup({
   );
 }
 
-function ReviewPage({ onNavigate }: ReviewPageProps) {
+function ReviewPage({ onNavigate, onLogout, showNameOnReviews }: ReviewPageProps) {
   const [rating, setRating] = useState(0);
   const [ratingError, setRatingError] = useState(false);
   const [draft, setDraft] = useState<ReviewDraft | null>(null);
@@ -143,7 +145,10 @@ function ReviewPage({ onNavigate }: ReviewPageProps) {
         <a className="brand d-inline-flex align-items-center u-focus-ring" href="/" aria-label="Trato, volver al inicio" onClick={(event) => { event.preventDefault(); onNavigate("/"); }}>
           <span className="brand-mark">t.</span><span>trato</span>
         </a>
-        <a className="review-back-link d-inline-flex align-items-center u-focus-ring" href="/" onClick={(event) => { event.preventDefault(); onNavigate("/"); }}><ArrowLeft size={15} /> Volver al inicio</a>
+        <div className="review-header-actions d-flex align-items-center">
+          <a className="review-back-link d-inline-flex align-items-center u-focus-ring" href="/" onClick={(event) => { event.preventDefault(); onNavigate("/"); }}><ArrowLeft size={15} /> Volver al inicio</a>
+          <button className="review-logout-button d-inline-flex align-items-center u-focus-ring" type="button" onClick={onLogout}><LogOut size={14} /> Cerrar sesión</button>
+        </div>
       </header>
 
       <main className="review-main">
@@ -268,15 +273,15 @@ function ReviewPage({ onNavigate }: ReviewPageProps) {
                 <span>Confirmo que comparto una experiencia propia y que mi reseña no incluye datos personales de otras personas. <span className="required-mark">*</span></span>
               </label>
               <button className="review-submit-button d-inline-flex align-items-center justify-content-center u-focus-ring" type="submit">Revisar mi reseña <ArrowRight size={16} /></button>
-              <p className="submit-hint d-flex align-items-center"><ShieldCheck size={14} /> La reseña es anónima. No pedimos tu nombre ni tu correo.</p>
+              <p className="submit-hint d-flex align-items-center"><ShieldCheck size={14} /> Tu cuenta se usa para moderación. {showNameOnReviews ? "Tu nombre aparecerá en la reseña pública." : "Tu nombre no aparecerá en la reseña pública."}</p>
               </form>
             </div>
 
             <aside className="review-sidebar col-12 col-lg-4">
               <div className="privacy-card">
                 <div className="privacy-icon"><ShieldCheck size={20} /></div>
-                <h2>Tu identidad, fuera de la reseña.</h2>
-                <p>No te pedimos nombre, correo ni perfil. Comparte solo lo que viviste desde tu perspectiva.</p>
+                <h2>Tú decides cómo aparecer.</h2>
+                <p>La información de tu cuenta ayuda a moderar la comunidad. {showNameOnReviews ? "Has elegido mostrar tu nombre en las reseñas públicas." : "Has elegido mantener tu nombre anónimo en las reseñas públicas."}</p>
                 <div className="privacy-rule" />
                 <ul>
                   <li className="d-flex align-items-center"><Check size={14} /> Sin nombres de entrevistadores</li>
