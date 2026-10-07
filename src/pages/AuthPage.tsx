@@ -3,11 +3,12 @@ import { ArrowLeft, ArrowRight, Check, LockKeyhole, ShieldCheck } from "lucide-r
 
 type AuthPageProps = {
   onNavigate: (path: string) => void;
+  onAuthenticated: (showNameOnReviews: boolean) => void;
 };
 
 type AuthMode = "login" | "register";
 
-function AuthPage({ onNavigate }: AuthPageProps) {
+function AuthPage({ onNavigate, onAuthenticated }: AuthPageProps) {
   const [mode, setMode] = useState<AuthMode>("login");
   const [notice, setNotice] = useState("");
 
@@ -31,7 +32,7 @@ function AuthPage({ onNavigate }: AuthPageProps) {
       setNotice("Las contraseñas no coinciden. Revísalas e inténtalo de nuevo.");
       return;
     }
-    setNotice("El formulario está completo, pero no se ha enviado: la autenticación todavía no está conectada al servidor.");
+    onAuthenticated(isRegistering && formData.get("publicName") === "visible");
   }
 
   const isRegistering = mode === "register";
@@ -69,16 +70,16 @@ function AuthPage({ onNavigate }: AuthPageProps) {
             <p className="auth-story-eyebrow">UNA COMUNIDAD CON MÁS CONTEXTO</p>
             <h1>Tu experiencia merece <span>ser escuchada.</span></h1>
             <p className="auth-story-copy">
-              Crea una cuenta para reunir tus reseñas y poder gestionarlas. Tu nombre no aparecerá junto a tus experiencias públicas.
+              Tu cuenta permite gestionar tus reseñas y ayuda a moderar la comunidad. Al registrarte, eliges si tu nombre aparece en tus reseñas públicas.
             </p>
             <div className="auth-story-points">
               <p><Check size={15} /> Comparte más de una experiencia</p>
               <p><Check size={15} /> Edita y gestiona tus reseñas</p>
-              <p><Check size={15} /> Mantén tu identidad privada</p>
+              <p><Check size={15} /> Elige cómo mostrar tu nombre</p>
             </div>
             <div className="auth-story-footnote">
               <LockKeyhole size={15} />
-              <span>Tu cuenta ayuda a moderar; no cambia el anonimato público de tus reseñas.</span>
+              <span>La información de tu cuenta se utiliza con fines de moderación. La visibilidad de tu nombre en cada reseña es una elección tuya.</span>
             </div>
           </div>
 
@@ -161,6 +162,26 @@ function AuthPage({ onNavigate }: AuthPageProps) {
                   />
                 </label>
               )}
+              {isRegistering && (
+                <fieldset className="auth-identity-fieldset">
+                  <legend>¿Cómo quieres aparecer en tus reseñas?</legend>
+                  <label className="auth-identity-option">
+                    <input type="radio" name="publicName" value="anonymous" defaultChecked required />
+                    <span>
+                      <strong>Con nombre anónimo</strong>
+                      <small>Tu nombre de cuenta no se mostrará públicamente.</small>
+                    </span>
+                  </label>
+                  <label className="auth-identity-option">
+                    <input type="radio" name="publicName" value="visible" required />
+                    <span>
+                      <strong>Mostrar mi nombre</strong>
+                      <small>Tu nombre aparecerá junto a tus reseñas públicas.</small>
+                    </span>
+                  </label>
+                  <p>En ambos casos, los datos de tu cuenta sirven para la moderación.</p>
+                </fieldset>
+              )}
               {!isRegistering && (
                 <button
                   className="auth-forgot-link"
@@ -178,19 +199,10 @@ function AuthPage({ onNavigate }: AuthPageProps) {
 
             <p className="auth-privacy-note">
               <ShieldCheck size={15} />
-              <span>La autenticación aún no está activa. No introduzcas una contraseña que uses en otros servicios.</span>
+              <span>Acceso de demostración: las credenciales no se verifican y no se guardan. No uses una contraseña real.</span>
             </p>
             <p className="auth-review-link">
-              ¿Quieres compartir una experiencia?{" "}
-              <a
-                href="/resena"
-                onClick={(event) => {
-                  event.preventDefault();
-                  onNavigate("/resena");
-                }}
-              >
-                Ir al formulario
-              </a>
+              Para escribir o gestionar reseñas, inicia sesión o crea una cuenta.
             </p>
           </div>
         </section>

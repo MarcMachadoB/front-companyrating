@@ -4,6 +4,12 @@
 
 .review-back-link:hover, .review-secondary-link:hover { color: #789a3f; }
 
+.review-header-actions { gap: 19px; }
+
+.review-logout-button { gap: 7px; padding: 0; border: 0; background: transparent; color: #617067; font-size: 11px; font-weight: 600; cursor: pointer; }
+
+.review-logout-button:hover { color: #a24e3b; }
+
 .review-intro { max-width: 690px; margin: 0 auto 36px; text-align: center; }
 
 .review-intro .eyebrow { justify-content: center; }
@@ -11,12 +17,6 @@
 .review-intro h1 { margin: 17px 0 12px; font-size: clamp(43px, 5.3vw, 60px); letter-spacing: -3.5px; }
 
 .review-intro > p { max-width: 570px; margin: 0 auto; color: #76827a; font-size: 14px; line-height: 1.75; }
-
-.review-intro .review-account-prompt { margin-top: 12px; color: #89938b; font-size: 10px; }
-
-.review-account-prompt a { color: #526b42; font-weight: 700; }
-
-.review-account-prompt a:hover { color: #244d3d; text-decoration: underline; }
 
 .review-form { padding: 28px 30px; border: 1px solid var(--fluent-neutral-stroke1); border-radius: 11px; background: var(--fluent-neutral-background1); box-shadow: var(--fluent-shadow-2); }
 
@@ -171,8 +171,9 @@
   .review-intro .eyebrow { justify-content: flex-start; }
   .review-intro h1 { margin: 17px 0 11px; font-size: clamp(42px, 11vw, 55px); letter-spacing: -2.8px; }
   .review-intro > p { margin: 0; font-size: 12px; }
-  .review-intro .review-account-prompt { margin-top: 10px; font-size: 9px; }
   .review-form { padding: 21px 17px; }
+  .review-header-actions { gap: 12px; }
+  .review-back-link, .review-logout-button { gap: 5px; font-size: 9px; }
   .form-fields-grid { grid-template-columns: 1fr; gap: 13px; }
   .form-section { padding-bottom: 22px; margin-bottom: 21px; }
   .form-section-heading { margin-bottom: 17px; }

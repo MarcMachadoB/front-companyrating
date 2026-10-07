@@ -56,6 +56,24 @@
 
 .auth-field .form-control:focus { border-color: var(--fluent-brand-primary); box-shadow: 0 0 0 3px var(--bs-focus-ring-color); }
 
+.auth-identity-fieldset { display: grid; gap: 9px; min-width: 0; padding: 0; margin: 0; border: 0; }
+
+.auth-identity-fieldset legend { margin-bottom: 1px; color: #526157; font-size: 10px; font-weight: 600; }
+
+.auth-identity-option { display: flex; align-items: flex-start; gap: 9px; padding: 10px 11px; border: 1px solid #e6e9e1; border-radius: 6px; color: #53645a; cursor: pointer; }
+
+.auth-identity-option:has(input:checked) { border-color: #a6bd7c; background: #f4f7ed; }
+
+.auth-identity-option input { flex: 0 0 auto; margin-top: 2px; accent-color: #62813b; }
+
+.auth-identity-option span { display: grid; gap: 3px; }
+
+.auth-identity-option strong { font-size: 9px; }
+
+.auth-identity-option small, .auth-identity-fieldset > p { margin: 0; color: #89938b; font-size: 8px; line-height: 1.5; }
+
+.auth-identity-fieldset > p { padding-left: 1px; }
+
 .auth-forgot-link { justify-self: end; padding: 0; margin-top: -5px; border: 0; background: none; color: #62813b; font-size: 9px; font-weight: 600; cursor: pointer; }
 
 .auth-forgot-link:hover, .auth-review-link a:hover { color: #244d3d; text-decoration: underline; }
