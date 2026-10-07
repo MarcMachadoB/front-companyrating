@@ -150,7 +150,19 @@ function ReviewPage({ onNavigate }: ReviewPageProps) {
         <div className="review-intro">
           <div className="eyebrow d-flex align-items-center"><span className="eyebrow-dot" /> TU EXPERIENCIA IMPORTA</div>
           <h1>Que no se quede <span>en visto.</span></h1>
-          <p>Comparte cómo fue tu proceso de selección. Tu opinión ayuda a otras personas a postular con más contexto.</p>
+          <p>Comparte cómo fue tu proceso de selección. Tu opinión ayuda a otras personas a postular con más contexto y podrás gestionarla desde tu cuenta cuando se conecte el servicio.</p>
+          <p className="review-account-prompt">
+            ¿Buscas el acceso?{" "}
+            <a
+              href="/acceso"
+              onClick={(event) => {
+                event.preventDefault();
+                onNavigate("/acceso");
+              }}
+            >
+              Iniciar sesión o crear cuenta
+            </a>
+          </p>
         </div>
 
         {draft ? (

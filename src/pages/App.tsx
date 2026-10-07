@@ -7,12 +7,14 @@ import {
   ChevronDown,
   Clock3,
   HeartHandshake,
+  LogIn,
   Search,
   ShieldCheck,
   Sparkles,
   Star,
 } from "lucide-react";
 import ReviewPage from "./ReviewPage";
+import AuthPage from "./AuthPage";
 
 type Company = {
   name: string;
@@ -112,6 +114,10 @@ function App() {
     return <ReviewPage onNavigate={navigateTo} />;
   }
 
+  if (pathname === "/acceso" || pathname === "/login") {
+    return <AuthPage onNavigate={navigateTo} />;
+  }
+
   return (
     <div className="site-shell">
       <header className="site-header d-flex align-items-center justify-content-between">
@@ -124,9 +130,14 @@ function App() {
           <a href="#empresas">Explorar empresas</a>
           <a href="#principios">Para qué existe</a>
         </nav>
-        <a className="header-cta d-flex align-items-center u-focus-ring" href="/resena" onClick={(event) => { event.preventDefault(); navigateTo("/resena"); }}>
+        <div className="header-actions d-flex align-items-center">
+          <a className="header-login d-inline-flex align-items-center u-focus-ring" href="/acceso" onClick={(event) => { event.preventDefault(); navigateTo("/acceso"); }}>
+            <LogIn size={14} /> Entrar
+          </a>
+          <a className="header-cta d-flex align-items-center u-focus-ring" href="/resena" onClick={(event) => { event.preventDefault(); navigateTo("/resena"); }}>
           Escribir una reseña <ArrowUpRight size={15} />
-        </a>
+          </a>
+        </div>
       </header>
 
       <main>
