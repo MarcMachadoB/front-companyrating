@@ -16,8 +16,9 @@ type ReviewDraft = {
 
 type ReviewPageProps = {
   onNavigate: (path: string) => void;
-  onLogout: () => void;
+  onLogout: () => Promise<void>;
   showNameOnReviews: boolean;
+  authError: string;
 };
 
 const communicationOptions = [
@@ -75,7 +76,7 @@ function ChoiceGroup({
   );
 }
 
-function ReviewPage({ onNavigate, onLogout, showNameOnReviews }: ReviewPageProps) {
+function ReviewPage({ onNavigate, onLogout, showNameOnReviews, authError }: ReviewPageProps) {
   const [rating, setRating] = useState(0);
   const [ratingError, setRatingError] = useState(false);
   const [draft, setDraft] = useState<ReviewDraft | null>(null);
@@ -152,6 +153,7 @@ function ReviewPage({ onNavigate, onLogout, showNameOnReviews }: ReviewPageProps
       </header>
 
       <main className="review-main">
+        {authError && <p className="auth-notice is-error" role="alert">{authError}</p>}
         <div className="review-intro">
           <div className="eyebrow d-flex align-items-center"><span className="eyebrow-dot" /> TU EXPERIENCIA IMPORTA</div>
           <h1>Que no se quede <span>en visto.</span></h1>

@@ -13,8 +13,10 @@ import {
   Sparkles,
   Star,
 } from "lucide-react";
+import { onAuthStateChanged, signOut, type User } from "firebase/auth";
 import ReviewPage from "./ReviewPage";
 import AuthPage from "./AuthPage";
+import { auth } from "../firebase";
 
 type Company = {
   name: string;
@@ -77,7 +79,9 @@ const principles = [
 function App() {
   const [pathname, setPathname] = useState(() => window.location.pathname);
   const [showNameOnReviews, setShowNameOnReviews] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [authLoading, setAuthLoading] = useState(auth !== null);
+  const [authError, setAuthError] = useState("");
   const [query, setQuery] = useState("");
   const [submittedQuery, setSubmittedQuery] = useState("");
 
@@ -91,11 +95,35 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (pathname === "/resena" && !isAuthenticated) {
+    if (!auth) {
+      setAuthLoading(false);
+      return;
+    }
+
+    return onAuthStateChanged(
+      auth,
+      (user) => {
+        setCurrentUser(user);
+        setShowNameOnReviews(
+          user !== null
+            && window.localStorage.getItem(`trato:public-name:${user.uid}`) === "visible",
+        );
+        setAuthLoading(false);
+      },
+      (error) => {
+        console.error("Unable to restore Firebase Authentication session.", error);
+        setAuthError("No se pudo comprobar tu sesión con Firebase. Recarga la página o inténtalo más tarde.");
+        setAuthLoading(false);
+      },
+    );
+  }, []);
+
+  useEffect(() => {
+    if (!authLoading && pathname === "/resena" && !currentUser) {
       window.history.replaceState(null, "", "/acceso");
       setPathname("/acceso");
     }
-  }, [pathname, isAuthenticated]);
+  }, [authLoading, currentUser, pathname]);
 
   function navigateTo(path: string) {
     if (window.location.pathname !== path) {
@@ -105,15 +133,27 @@ function App() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  function handleAuthenticated(nextShowNameOnReviews: boolean) {
+  function handleAuthenticated(user: User, nextShowNameOnReviews: boolean) {
+    window.localStorage.setItem(
+      `trato:public-name:${user.uid}`,
+      nextShowNameOnReviews ? "visible" : "anonymous",
+    );
+    setCurrentUser(user);
     setShowNameOnReviews(nextShowNameOnReviews);
-    setIsAuthenticated(true);
+    setAuthError("");
     navigateTo("/resena");
   }
 
-  function handleLogout() {
-    setIsAuthenticated(false);
-    navigateTo("/acceso");
+  async function handleLogout() {
+    if (!auth) return;
+    setAuthError("");
+    try {
+      await signOut(auth);
+      navigateTo("/acceso");
+    } catch (error) {
+      console.error("Firebase sign-out failed.", error);
+      setAuthError("No se pudo cerrar la sesión. Inténtalo de nuevo.");
+    }
   }
 
   const filteredCompanies = useMemo(() => {
@@ -130,8 +170,19 @@ function App() {
     document.getElementById("empresas")?.scrollIntoView({ behavior: "smooth" });
   }
 
-  if (pathname === "/resena" && isAuthenticated) {
-    return <ReviewPage onNavigate={navigateTo} onLogout={handleLogout} showNameOnReviews={showNameOnReviews} />;
+  if (pathname === "/resena" && authLoading) {
+    return <main className="auth-loading" role="status">Comprobando tu sesión…</main>;
+  }
+
+  if (pathname === "/resena" && currentUser) {
+    return (
+      <ReviewPage
+        onNavigate={navigateTo}
+        onLogout={handleLogout}
+        showNameOnReviews={showNameOnReviews}
+        authError={authError}
+      />
+    );
   }
 
   if (pathname === "/acceso" || pathname === "/login" || pathname === "/resena") {
