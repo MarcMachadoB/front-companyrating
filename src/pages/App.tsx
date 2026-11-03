@@ -17,6 +17,7 @@ import { onAuthStateChanged, signOut, type User } from "firebase/auth";
 import ReviewPage from "./ReviewPage";
 import AuthPage from "./AuthPage";
 import { auth } from "../firebase";
+import { getBackendUser, type BackendUser } from "../api/authApi";
 
 type Company = {
   name: string;
@@ -80,7 +81,9 @@ function App() {
   const [pathname, setPathname] = useState(() => window.location.pathname);
   const [showNameOnReviews, setShowNameOnReviews] = useState(false);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [backendUser, setBackendUser] = useState<BackendUser | null>(null);
   const [authLoading, setAuthLoading] = useState(auth !== null);
+  const [backendLoading, setBackendLoading] = useState(false);
   const [authError, setAuthError] = useState("");
   const [query, setQuery] = useState("");
   const [submittedQuery, setSubmittedQuery] = useState("");
@@ -102,13 +105,34 @@ function App() {
 
     return onAuthStateChanged(
       auth,
-      (user) => {
+      async (user) => {
         setCurrentUser(user);
+        setBackendUser(null);
         setShowNameOnReviews(
           user !== null
             && window.localStorage.getItem(`trato:public-name:${user.uid}`) === "visible",
         );
-        setAuthLoading(false);
+        setAuthError("");
+        if (!user) {
+          setAuthLoading(false);
+          setBackendLoading(false);
+          return;
+        }
+
+        setBackendLoading(true);
+        try {
+          setBackendUser(await getBackendUser(user));
+        } catch (error) {
+          console.error("Backend rejected or could not verify the Firebase session.", error);
+          setAuthError(
+            error instanceof Error
+              ? error.message
+              : "No se pudo comprobar la sesión con el backend.",
+          );
+        } finally {
+          setAuthLoading(false);
+          setBackendLoading(false);
+        }
       },
       (error) => {
         console.error("Unable to restore Firebase Authentication session.", error);
@@ -119,11 +143,11 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (!authLoading && pathname === "/resena" && !currentUser) {
+    if (!authLoading && !backendLoading && pathname === "/resena" && (!currentUser || !backendUser)) {
       window.history.replaceState(null, "", "/acceso");
       setPathname("/acceso");
     }
-  }, [authLoading, currentUser, pathname]);
+  }, [authLoading, backendLoading, backendUser, currentUser, pathname]);
 
   function navigateTo(path: string) {
     if (window.location.pathname !== path) {
@@ -133,12 +157,13 @@ function App() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  function handleAuthenticated(user: User, nextShowNameOnReviews: boolean) {
+  function handleAuthenticated(user: User, nextShowNameOnReviews: boolean, verifiedUser: BackendUser) {
     window.localStorage.setItem(
       `trato:public-name:${user.uid}`,
       nextShowNameOnReviews ? "visible" : "anonymous",
     );
     setCurrentUser(user);
+    setBackendUser(verifiedUser);
     setShowNameOnReviews(nextShowNameOnReviews);
     setAuthError("");
     navigateTo("/resena");
@@ -149,6 +174,7 @@ function App() {
     setAuthError("");
     try {
       await signOut(auth);
+      setBackendUser(null);
       navigateTo("/acceso");
     } catch (error) {
       console.error("Firebase sign-out failed.", error);
@@ -170,11 +196,11 @@ function App() {
     document.getElementById("empresas")?.scrollIntoView({ behavior: "smooth" });
   }
 
-  if (pathname === "/resena" && authLoading) {
+  if (pathname === "/resena" && (authLoading || backendLoading)) {
     return <main className="auth-loading" role="status">Comprobando tu sesión…</main>;
   }
 
-  if (pathname === "/resena" && currentUser) {
+  if (pathname === "/resena" && currentUser && backendUser) {
     return (
       <ReviewPage
         onNavigate={navigateTo}
@@ -186,7 +212,13 @@ function App() {
   }
 
   if (pathname === "/acceso" || pathname === "/login" || pathname === "/resena") {
-    return <AuthPage onNavigate={navigateTo} onAuthenticated={handleAuthenticated} />;
+    return (
+      <AuthPage
+        onNavigate={navigateTo}
+        onAuthenticated={handleAuthenticated}
+        backendError={authError}
+      />
+    );
   }
 
   return (
