@@ -8,15 +8,17 @@ import {
   type User,
 } from "firebase/auth";
 import { auth, firebaseConfigured } from "../firebase";
+import { ApiRequestError, getBackendUser, type BackendUser } from "../api/authApi";
 
 type AuthPageProps = {
   onNavigate: (path: string) => void;
-  onAuthenticated: (user: User, showNameOnReviews: boolean) => void;
+  onAuthenticated: (user: User, showNameOnReviews: boolean, backendUser: BackendUser) => void;
+  backendError: string;
 };
 
 type AuthMode = "login" | "register";
 
-function AuthPage({ onNavigate, onAuthenticated }: AuthPageProps) {
+function AuthPage({ onNavigate, onAuthenticated, backendError }: AuthPageProps) {
   const [mode, setMode] = useState<AuthMode>("login");
   const [notice, setNotice] = useState("");
   const [noticeIsError, setNoticeIsError] = useState(false);
@@ -38,6 +40,7 @@ function AuthPage({ onNavigate, onAuthenticated }: AuthPageProps) {
   }
 
   function getAuthErrorMessage(error: unknown) {
+    if (error instanceof ApiRequestError) return error.message;
     if (!(error instanceof Error) || !("code" in error)) {
       return "No se pudo completar la operación. Inténtalo de nuevo.";
     }
@@ -92,12 +95,19 @@ function AuthPage({ onNavigate, onAuthenticated }: AuthPageProps) {
         const name = String(formData.get("name")).trim();
         await updateProfile(credential.user, { displayName: name });
         const showNameOnReviews = formData.get("publicName") === "visible";
-        onAuthenticated(credential.user, showNameOnReviews);
+        window.localStorage.setItem(
+          `trato:public-name:${credential.user.uid}`,
+          showNameOnReviews ? "visible" : "anonymous",
+        );
+        const backendUser = await getBackendUser(credential.user);
+        onAuthenticated(credential.user, showNameOnReviews, backendUser);
       } else {
         const credential = await signInWithEmailAndPassword(auth, email, password);
+        const backendUser = await getBackendUser(credential.user);
         onAuthenticated(
           credential.user,
           window.localStorage.getItem(`trato:public-name:${credential.user.uid}`) === "visible",
+          backendUser,
         );
       }
     } catch (error) {
@@ -297,6 +307,7 @@ function AuthPage({ onNavigate, onAuthenticated }: AuthPageProps) {
                 {isSubmitting ? "Un momento…" : isRegistering ? "Crear cuenta" : "Iniciar sesión"} <ArrowRight size={16} />
               </button>
               {notice && <p className={`auth-notice${noticeIsError ? " is-error" : ""}`} role={noticeIsError ? "alert" : "status"}>{notice}</p>}
+              {!notice && backendError && <p className="auth-notice is-error" role="alert">{backendError}</p>}
             </form>
 
             <p className="auth-privacy-note">
